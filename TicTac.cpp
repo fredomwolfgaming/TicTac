@@ -94,6 +94,129 @@ public:
         return false;
     }
 
+    // can specified competitor win in the next move?
+    string willWin(Entry e)
+    {
+        //get character index and then chartoint within ai
+        //string = "cr"
+        //returns nowin if there are no places for character e to win in the next round
+
+        // first col win possible
+        if ( board[0][1] == (char)e && board[0][2] == (char)e)
+        {
+            return "00";
+        }
+        else if (board[0][0] == (char)e && board[0][2] == (char)e)
+        {
+            return "01";
+        }
+        else if (board[0][0] == (char)e && board[0][1] == (char)e)
+        {
+            return "02";
+        }
+
+        // second col
+        else if (board[1][1] == (char)e && board[1][2] == (char)e)
+        {
+            return "10";
+        }
+        else if (board[1][0] == (char)e && board[1][2] == (char)e)
+        {
+            return "11";
+        }
+        else if (board[1][0] == (char)e && board[1][1] == (char)e)
+        {
+            return "12";
+        }
+
+        // third col
+        else if (board[2][1] == (char)e && board[2][2] == (char)e)
+        {
+            return "20";
+        }
+        else if (board[2][0] == (char)e && board[2][2] == (char)e)
+        {
+            return "21";
+        }
+        else if (board[2][0] == (char)e && board[2][1] == (char)e)
+        {
+            return "22";
+        }
+
+        // first row 
+        else if (board[1][0] == (char)e && board[2][0] == (char)e)
+        {
+            return "00";
+        }
+        else if (board[0][0] == (char)e && board[2][0] == (char)e)
+        {
+            return "10";
+        }
+        else if (board[0][0] == (char)e && board[1][0] == (char)e)
+        {
+            return "20";
+        }
+
+        // second row
+        else if (board[1][1] == (char)e && board[2][1] == (char)e)
+        {
+            return "01";
+        }
+        else if (board[0][1] == (char)e && board[2][1] == (char)e)
+        {
+            return "11";
+        }
+        else if (board[0][1] == (char)e && board[1][1] == (char)e)
+        {
+            return "21";
+        }
+
+        // third row
+        else if (board[1][2] == (char)e && board[2][2] == (char)e)
+        {
+            return "02";
+        }
+        else if (board[0][2] == (char)e && board[2][2] == (char)e)
+        {
+            return "12";
+        }
+        else if (board[0][2] == (char)e && board[1][2] == (char)e)
+        {
+            return "22";
+        }
+
+        // diagonal 1
+        else if (board[1][1] == (char)e && board[2][2] == (char)e)
+        {
+            return "00";
+        }
+        else if (board[0][0] == (char)e && board[2][2] == (char)e)
+        {
+            return "11";
+        }
+        else if (board[0][0] == (char)e && board[1][1] == (char)e)
+        {
+            return "22";
+        }
+
+        // diagonal 2
+        else if (board[1][1] == (char)e && board[2][0] == (char)e)
+        {
+            return "02";
+        }
+        else if (board[0][2] == (char)e && board[2][0] == (char)e)
+        {
+            return "11";
+        }
+        else if (board[0][2] == (char)e && board[1][1] == (char)e)
+        {
+            return "20";
+        }
+
+        return "nowin";//no winning moves detected
+    }
+
+
     // return size of the board; mostly just in case I wanted to make the board expandable
     int getSize()
     {
@@ -176,6 +299,8 @@ static bool getHumanMove(int maxValue, TicTacToe::Entry human, TicTacToe& t)
 * if corner point is taken, then check central side points for occupation, and attempt to take that and corners?
 */
 
+
+
 static bool getComputerMove(TicTacToe::Entry computer, TicTacToe& t)
 {
     // check if computer is able to move
@@ -187,36 +312,71 @@ static bool getComputerMove(TicTacToe::Entry computer, TicTacToe& t)
     int rowChoice = 0;
     int colChoice = 0;
 
-    do {
+    //will win notes:
+    //p1 is human
+    //get character index and then chartoint within main
+    //string = "cr"
+    //returns nowin if there are no places for character e to win in the next round
+    string p1WillWin = t.willWin(t.PLAYER_ONE);
+    string p2WillWin = t.willWin(t.PLAYER_TWO);
 
-        // choose at random until we find a space that's empty
+    if (p1WillWin != "nowin")
+    {//if computer is about to win,
+
+    }
+    else if (p2WillWin != "nowin")
+    {//if player is about to win
+
+    }
+    else if (true)
+    {//if center is occupied by comp
+
+    }
+    else if (true)
+    {//if center is occupied by comp
+
+    }
+
+    else if (true)
+    {//if center is occupied by player
+
+    }
+
+    else//last resort, plain else
+    {
+        
         do {
 
-            rowChoice = rand() % ((t.getSize() - 0) + 1) + 0;
+            // choose at random until we find a space that's empty
+            do {
 
-        } while (rowChoice > t.getSize() || rowChoice < 0);
+                rowChoice = rand() % ((t.getSize() - 0) + 1) + 0;
 
-        do {
+            } while (rowChoice > t.getSize() || rowChoice < 0);
 
-            colChoice = rand() % ((t.getSize() - 0) + 1) + 0;
+            do {
 
-        } while (colChoice > t.getSize() || colChoice < 0);
+                colChoice = rand() % ((t.getSize() - 0) + 1) + 0;
 
-
-        if (t.board[rowChoice][colChoice] == t.EMPTY)
-        {
-            t.board[rowChoice][colChoice] = (char)computer;
-
-            return false;
-        }
-
-        else
-        {
-            //cout << "Not a valid option! Please try again..." << endl;
-        }
+            } while (colChoice > t.getSize() || colChoice < 0);
 
 
-    } while (t.board[rowChoice][colChoice] != t.EMPTY);
+            if (t.board[rowChoice][colChoice] == t.EMPTY)
+            {
+                t.board[rowChoice][colChoice] = (char)computer;
+
+                return false;//exit func
+            }
+
+            else
+            {
+                //cout << "Not a valid option! Please try again..." << endl;
+            }
+
+
+        } while (t.board[rowChoice][colChoice] != t.EMPTY);//while selected choice is not empty
+
+    }
 
     // move complete
     return false;
