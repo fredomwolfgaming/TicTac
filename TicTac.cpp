@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -320,29 +321,41 @@ static bool getComputerMove(TicTacToe::Entry computer, TicTacToe& t)
     string p1WillWin = t.willWin(t.PLAYER_ONE);
     string p2WillWin = t.willWin(t.PLAYER_TWO);
 
-    if (p1WillWin != "nowin")
-    {//if computer is about to win,
+    //if player one is not failing to win, then they are about to win
+    if (p2WillWin != "nowin")
+    {//if computer is about to win, then win. ignore human
 
+        colChoice = (p2WillWin.at(0)) - '0';//convert first index from char to int.
+        rowChoice = (p2WillWin.at(1)) - '0';
+        //uses the difference in positions on the ascii alphabet between "character" 0 and the character that was returned.
+        //4 is 4 positions apart
+        //https://stackoverflow.com/questions/5029840/convert-char-to-int-in-c-and-c
+        //has caveats but complies with the current usage
     }
-    else if (p2WillWin != "nowin")
-    {//if player is about to win
+    else if (p1WillWin != "nowin")
+    {//if player is about to win, block
 
+        colChoice = (p1WillWin.at(0)) - '0';//convert first index from char to int
+        rowChoice = (p1WillWin.at(1)) - '0';
     }
+    /*
+    * actually, i'm not a fan of this mindset.
+    * as a player, i consider knowing exactly what my opponents first move is going to be sad, and sometimes boring.
+    * most of the ai from older tictactoe games followed this religously.
+    * as discussed in class, taking center has an almost equal chance of winning as it does tieing. aka good chance of not loosing, but thats it.
+    * my prefernce is chaos, after consideration. try to win, otherwise chaos. at least for tic tac toe.
+    * 
     else if (true)
     {//if center is occupied by comp
 
     }
-    else if (true)
-    {//if center is occupied by comp
-
-    }
-
     else if (true)
     {//if center is occupied by player
 
     }
+    */
 
-    else//last resort, plain else
+    else//pick a spot at random, and try to play there.
     {
         
         do {
