@@ -1,2 +1,2 @@
 ﻿  TicTac.cpp
-LINK : fatal error LNK1168: cannot open D:\GithubScratchRepos\TicTac\x64\Debug\TicTac.exe for writing
+  TicTac.vcxproj -> D:\GithubScratchRepos\TicTac\x64\Debug\TicTac.exe

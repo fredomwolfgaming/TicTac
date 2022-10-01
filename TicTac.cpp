@@ -23,6 +23,13 @@ public:
         PLAYER_TWO = 'o'
     };
 
+    // predicted location of winning move
+    int winLoc[2] =
+    {
+        {0},//column
+        {0}//row
+    };
+
     // has the board been completely filled?
     bool isFull()
     {
@@ -39,13 +46,6 @@ public:
 
         return result;
     }
-
-    // predicted location of winning move
-    int winLoc[2] =
-    {
-        {0},//column
-        {0}//row
-    };
 
     // has someone won?
     bool isVictory(Entry e)
@@ -104,22 +104,25 @@ public:
 
     // can specified competitor win in the next move?
     //if so return true and store locaion in winLoc
+    //i realized it's easiest for readability to inport the code from isVictory,
+    // and replace the check for taken,
+    // with a check for empty on one of the combination elements.
     bool canWin(Entry e)
-    {
+    {//realized that i notated the reverse, it's winloc0 = row, winLoc1 = column
         // first col win possible
-        if ( board[0][1] == (char)e && board[0][2] == (char)e)
+        if (board[0][0] == EMPTY && board[0][1] == (char)e && board[0][2] == (char)e)
         {
             winLoc[0] = 0;//column
             winLoc[1] = 0;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][0] == (char)e && board[0][2] == (char)e)
+        if (board[0][0] == (char)e && board[0][1] == EMPTY && board[0][2] == (char)e)
         {
             winLoc[0] = 0;//column
             winLoc[1] = 1;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][0] == (char)e && board[0][1] == (char)e)
+        if (board[0][0] == (char)e && board[0][1] == (char)e && board[0][2] == EMPTY)
         {
             winLoc[0] = 0;//column
             winLoc[1] = 2;//row
@@ -127,19 +130,19 @@ public:
         }
 
         // second col
-        else if (board[1][1] == (char)e && board[1][2] == (char)e)
+        else if (board[1][0] == EMPTY && board[1][1] == (char)e && board[1][2] == (char)e)
         {
             winLoc[0] = 1;//column
             winLoc[1] = 0;//row
             return true;//competitor specified can win.
         }
-        else if (board[1][0] == (char)e && board[1][2] == (char)e)
+        else if (board[1][0] == (char)e && board[1][1] == EMPTY && board[1][2] == (char)e)
         {
             winLoc[0] = 1;//column
             winLoc[1] = 1;//row
             return true;//competitor specified can win.
         }
-        else if (board[1][0] == (char)e && board[1][1] == (char)e)
+        else if (board[1][0] == (char)e && board[1][1] == (char)e && board[1][2] == EMPTY)
         {
             winLoc[0] = 1;//column
             winLoc[1] = 2;//row
@@ -147,19 +150,19 @@ public:
         }
 
         // third col
-        else if (board[2][1] == (char)e && board[2][2] == (char)e)
+        else if (board[2][0] == EMPTY && board[2][1] == (char)e && board[2][2] == (char)e)
         {
             winLoc[0] = 2;//column
             winLoc[1] = 0;//row
             return true;//competitor specified can win.
         }
-        else if (board[2][0] == (char)e && board[2][2] == (char)e)
+        else if (board[2][0] == (char)e && board[2][1] == EMPTY && board[2][2] == (char)e)
         {
             winLoc[0] = 2;//column
             winLoc[1] = 1;//row
             return true;//competitor specified can win.
         }
-        else if (board[2][0] == (char)e && board[2][1] == (char)e)
+        else if (board[2][0] == (char)e && board[2][1] == (char)e && board[2][2] == EMPTY)
         {
             winLoc[0] = 2;//column
             winLoc[1] = 2;//row
@@ -167,19 +170,19 @@ public:
         }
 
         // first row 
-        else if (board[1][0] == (char)e && board[2][0] == (char)e)
+        else if (board[0][0] == EMPTY && board[1][0] == (char)e && board[2][0] == (char)e)
         {
             winLoc[0] = 0;//column
             winLoc[1] = 0;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][0] == (char)e && board[2][0] == (char)e)
+        else if (board[0][0] == (char)e && board[1][0] == EMPTY && board[2][0] == (char)e)
         {
             winLoc[0] = 1;//column
             winLoc[1] = 0;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][0] == (char)e && board[1][0] == (char)e)
+        else if (board[0][0] == (char)e && board[1][0] == (char)e && board[2][0] == EMPTY)
         {
             winLoc[0] = 2;//column
             winLoc[1] = 0;//row
@@ -187,19 +190,19 @@ public:
         }
 
         // second row
-        else if (board[1][1] == (char)e && board[2][1] == (char)e)
+        else if (board[0][1] == EMPTY && board[1][1] == (char)e && board[2][1] == (char)e)
         {
             winLoc[0] = 0;//column
             winLoc[1] = 1;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][1] == (char)e && board[2][1] == (char)e)
+        else if (board[0][1] == (char)e && board[1][1] == EMPTY && board[2][1] == (char)e)
         {
             winLoc[0] = 1;//column
             winLoc[1] = 1;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][1] == (char)e && board[1][1] == (char)e)
+        else if (board[0][1] == (char)e && board[1][1] == (char)e && board[2][1] == EMPTY)
         {
             winLoc[0] = 2;//column
             winLoc[1] = 1;//row
@@ -207,19 +210,19 @@ public:
         }
 
         // third row
-        else if (board[1][2] == (char)e && board[2][2] == (char)e)
+        else if (board[0][2] == EMPTY && board[1][2] == (char)e && board[2][2] == (char)e)
         {
             winLoc[0] = 0;//column
             winLoc[1] = 2;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][2] == (char)e && board[2][2] == (char)e)
+        else if (board[0][2] == (char)e && board[1][2] == EMPTY && board[2][2] == (char)e)
         {
             winLoc[0] = 1;//column
             winLoc[1] = 2;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][2] == (char)e && board[1][2] == (char)e)
+        else if (board[0][2] == (char)e && board[1][2] == (char)e && board[2][2] == EMPTY)
         {
             winLoc[0] = 2;//column
             winLoc[1] = 2;//row
@@ -227,19 +230,19 @@ public:
         }
 
         // diagonal 1
-        else if (board[1][1] == (char)e && board[2][2] == (char)e)
+        else if (board[0][0] == EMPTY && board[1][1] == (char)e && board[2][2] == (char)e)
         {
             winLoc[0] = 0;//column
             winLoc[1] = 0;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][0] == (char)e && board[2][2] == (char)e)
+        else if (board[0][0] == (char)e && board[1][1] == EMPTY && board[2][2] == (char)e)
         {
             winLoc[0] = 1;//column
             winLoc[1] = 1;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][0] == (char)e && board[1][1] == (char)e)
+        else if (board[0][0] == (char)e && board[1][1] == (char)e && board[2][2] == EMPTY)
         {
             winLoc[0] = 2;//column
             winLoc[1] = 2;//row
@@ -247,28 +250,27 @@ public:
         }
 
         // diagonal 2
-        else if (board[1][1] == (char)e && board[2][0] == (char)e)
+        else if (board[0][2] == EMPTY && board[1][1] == (char)e && board[2][0] == (char)e)
         {
             winLoc[0] = 0;//column
             winLoc[1] = 2;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][2] == (char)e && board[2][0] == (char)e)
+        else if (board[0][2] == (char)e && board[1][1] == EMPTY && board[2][0] == (char)e)
         {
             winLoc[0] = 1;//column
             winLoc[1] = 1;//row
             return true;//competitor specified can win.
         }
-        else if (board[0][2] == (char)e && board[1][1] == (char)e)
+        else if (board[0][2] == (char)e && board[1][1] == (char)e && board[2][0] == EMPTY)
         {
             winLoc[0] = 2;//column
             winLoc[1] = 0;//row
             return true;//competitor specified can win.
         }
-        else
-        {
-            return false;//no winning moves detected
-        }
+
+        return false;//no winning moves detected
+        //cout << "no win found \n";
     }
 
     // return size of the board; mostly just in case I wanted to make the board expandable
@@ -348,7 +350,7 @@ static bool getHumanMove(int maxValue, TicTacToe::Entry human, TicTacToe& t)
 * if no win is immediately possible, and no block is necessary: pick at random
 */
 
-static bool getComputerMove(TicTacToe::Entry computer, TicTacToe& t)
+static bool getComputerMove(TicTacToe::Entry computer, TicTacToe& t, TicTacToe::Entry human)
 {
     // check if computer is able to move
     if (t.isVictory(t.PLAYER_ONE) || t.isVictory(t.PLAYER_TWO) || t.isFull())
@@ -365,52 +367,44 @@ static bool getComputerMove(TicTacToe::Entry computer, TicTacToe& t)
     //t.canWin(t.PLAYER_TWO);//checks if player two can win in next round
     //colChoice = t.winLoc[0]; winloc = {c,r}
 
-    //not tested
+    //previous issue: had rows and columns flipped
     //if player one is not failing to win, then they are about to win
-    if (t.canWin(t.PLAYER_TWO))
+    if (t.canWin(computer))
     {//if computer is about to win, then win. ignore human
 
-        colChoice = t.winLoc[0];//set based on predictions
+        colChoice = t.winLoc[1];//set based on predictions
 
-        rowChoice = t.winLoc[1];
+        rowChoice = t.winLoc[0];
+        //cout << " win location Win: c" << colChoice << " r" << rowChoice << "\n";
 
         t.board[rowChoice][colChoice] = (char)computer;//send choice as computer
 
         return false;//exit
     }
 
-    else if (t.canWin(t.PLAYER_ONE))
+    else if (t.canWin(human))
     {//if player is about to win, block
 
-        colChoice = t.winLoc[0];//set based on predictions
+        colChoice = t.winLoc[1];//set based on predictions
 
-        rowChoice = t.winLoc[1];
+        rowChoice = t.winLoc[0];
 
+        //cout << " win location Block: c" << colChoice << " r" << rowChoice << "\n";
         t.board[rowChoice][colChoice] = (char)computer;//send choice as computer
 
         return false;//exit
     }
     /*
-    * actually, i'm not a fan of this mindset.
+    * actually, i'm not a fan of this mindset, where center is most inportant.
     * as a player, i consider knowing exactly what my opponents first move is going to be sad, and sometimes boring.
     * most of the ai from older tictactoe games followed this religously.
     * as discussed in class, taking center has an almost equal chance of winning as it does tieing. aka good chance of not loosing, but thats it.
     * my prefernce is chaos, after consideration. try to win, otherwise chaos. at least for tic tac toe.
-    * 
-    else if (true)
-    {//if center is occupied by comp
-
-    }
-    else if (true)
-    {//if center is occupied by player
-
-    }
     */
 
     //not broken
     else//pick a spot at random, and try to play there.
     {
-        
         do {
 
             // choose at random until we find a space that's empty
@@ -431,6 +425,7 @@ static bool getComputerMove(TicTacToe::Entry computer, TicTacToe& t)
             {
                 t.board[rowChoice][colChoice] = (char)computer;
 
+                //cout << " win location Rand: c" << colChoice << " r" << rowChoice << "\n";
                 return false;//exit func
             }
 
@@ -472,7 +467,7 @@ int main()
     {
         // show board
         t.dump();
-    } while (!getHumanMove(maxValue, human, t) && !getComputerMove(computer, t));
+    } while (!getHumanMove(maxValue, human, t) && !getComputerMove(computer, t, human));
 
 
     t.dump();
@@ -490,8 +485,3 @@ int main()
 
     return(0);
 }
-
-
-
-
-
